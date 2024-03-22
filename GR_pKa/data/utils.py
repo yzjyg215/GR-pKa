@@ -12,8 +12,8 @@ from tqdm import tqdm
 
 from .data import MoleculeDatapoint, MoleculeDataset
 from .scaffold import log_scaffold_stats, scaffold_split
-from chemprop.args import PredictArgs, TrainArgs
-from chemprop.features import load_features, load_valid_atom_or_bond_features
+from GR_pKa.args import PredictArgs, TrainArgs
+from GR_pKa.features import load_features, load_valid_atom_or_bond_features
 
 
 def preprocess_smiles_columns(path: str,
@@ -145,8 +145,8 @@ def filter_invalid_smiles(data: MoleculeDataset) -> MoleculeDataset:
     """
     Filters out invalid SMILES.
 
-    :param data: A :class:`~chemprop.data.MoleculeDataset`.
-    :return: A :class:`~chemprop.data.MoleculeDataset` with only the valid molecules.
+    :param data: A :class:`~GR_pKa.data.MoleculeDataset`.
+    :return: A :class:`~GR_pKa.data.MoleculeDataset` with only the valid molecules.
     """
     return MoleculeDataset([datapoint for datapoint in tqdm(data)
                             if all(s != '' for s in datapoint.smiles) and all(m is not None for m in datapoint.mol)
@@ -178,7 +178,7 @@ def get_data(path: str,
                            except the :code:`smiles_column` and the :code:`ignore_columns`.
     :param ignore_columns: Name of the columns to ignore when :code:`target_columns` is not provided.
     :param skip_invalid_smiles: Whether to skip and filter out invalid smiles using :func:`filter_invalid_smiles`.
-    :param args: Arguments, either :class:`~chemprop.args.TrainArgs` or :class:`~chemprop.args.PredictArgs`.
+    :param args: Arguments, either :class:`~GR_pKa.args.TrainArgs` or :class:`~GR_pKa.args.PredictArgs`.
     :param features_path: A list of paths to files containing features. If provided, it is used
                           in place of :code:`args.features_path`.
     :param features_generator: A list of features generators to use. If provided, it is used
@@ -188,10 +188,10 @@ def get_data(path: str,
     :param coulomb_path: The path to the file containing the custom coulomb matrices.
     :param max_data_size: The maximum number of data points to load.
     :param logger: A logger for recording output.
-    :param store_row: Whether to store the raw CSV row in each :class:`~chemprop.data.data.MoleculeDatapoint`.
+    :param store_row: Whether to store the raw CSV row in each :class:`~GR_pKa.data.data.MoleculeDatapoint`.
     :param skip_none_targets: Whether to skip targets that are all 'None'. This is mostly relevant when --target_columns
                               are passed in, so only a subset of tasks are examined.
-    :return: A :class:`~chemprop.data.MoleculeDataset` containing SMILES and target values along
+    :return: A :class:`~GR_pKa.data.MoleculeDataset` containing SMILES and target values along
              with other info such as additional features when desired.
     """
     debug = logger.debug if logger is not None else print
@@ -342,13 +342,13 @@ def get_data_from_smiles(smiles: List[List[str]],
                          logger: Logger = None,
                          features_generator: List[str] = None) -> MoleculeDataset:
     """
-    Converts a list of SMILES to a :class:`~chemprop.data.MoleculeDataset`.
+    Converts a list of SMILES to a :class:`~GR_pKa.data.MoleculeDataset`.
 
     :param smiles: A list of lists of SMILES with length depending on the number of molecules.
     :param skip_invalid_smiles: Whether to skip and filter out invalid smiles using :func:`filter_invalid_smiles`
     :param logger: A logger for recording output.
     :param features_generator: List of features generators.
-    :return: A :class:`~chemprop.data.MoleculeDataset` with all of the provided SMILES.
+    :return: A :class:`~GR_pKa.data.MoleculeDataset` with all of the provided SMILES.
     """
     debug = logger.debug if logger is not None else print
 
@@ -384,14 +384,14 @@ def split_data(data: MoleculeDataset,
     r"""
     Splits data into training, validation, and test splits.
 
-    :param data: A :class:`~chemprop.data.MoleculeDataset`.
+    :param data: A :class:`~GR_pKa.data.MoleculeDataset`.
     :param split_type: Split type.
     :param sizes: A length-3 tuple with the proportions of data in the train, validation, and test sets.
     :param seed: The random seed to use before shuffling data.
     :param num_folds: Number of folds to create (only needed for "cv" split type).
-    :param args: A :class:`~chemprop.args.TrainArgs` object.
+    :param args: A :class:`~GR_pKa.args.TrainArgs` object.
     :param logger: A logger for recording output.
-    :return: A tuple of :class:`~chemprop.data.MoleculeDataset`\ s containing the train,
+    :return: A tuple of :class:`~GR_pKa.data.MoleculeDataset`\ s containing the train,
              validation, and test splits of the data.
     """
     if not (len(sizes) == 3 and sum(sizes) == 1):
@@ -519,7 +519,7 @@ def get_class_sizes(data: MoleculeDataset) -> List[List[float]]:
     """
     Determines the proportions of the different classes in a classification dataset.
 
-    :param data: A classification :class:`~chemprop.data.MoleculeDataset`.
+    :param data: A classification :class:`~GR_pKa.data.MoleculeDataset`.
     :return: A list of lists of class proportions. Each inner list contains the class proportions for a task.
     """
     targets = data.targets()
@@ -552,7 +552,7 @@ def validate_dataset_type(data: MoleculeDataset, dataset_type: str) -> None:
     """
     Validates the dataset type to ensure the data matches the provided type.
 
-    :param data: A :class:`~chemprop.data.MoleculeDataset`.
+    :param data: A :class:`~GR_pKa.data.MoleculeDataset`.
     :param dataset_type: The dataset type to check.
     """
     target_set = {target for targets in data.targets()

@@ -3,8 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import einops
 
-from chemprop.args import TrainArgs
-from chemprop.nn_utils import get_activation_function
+from GR_pKa.args import TrainArgs
+from GR_pKa.nn_utils import get_activation_function
 
 
 class MultiBondFastRetention(nn.Module):
@@ -14,7 +14,7 @@ class MultiBondFastRetention(nn.Module):
 
     def __init__(self, args: TrainArgs):
         """
-        :param args: A :class:`~chemprop.args.TrainArgs` object containing model arguments.
+        :param args: A :class:`~GR_pKa.args.TrainArgs` object containing model arguments.
         """
         super(MultiBondFastRetention, self).__init__()
         self.hidden_size = args.hidden_size
@@ -139,7 +139,7 @@ class MultiBondRetention(nn.Module):
 
     def __init__(self, args: TrainArgs):
         """
-        :param args: A :class:`~chemprop.args.TrainArgs` object containing model arguments.
+        :param args: A :class:`~GR_pKa.args.TrainArgs` object containing model arguments.
         """
         super(MultiBondRetention, self).__init__()
         self.hidden_size = args.hidden_size
@@ -234,7 +234,7 @@ class MultiAtomRetention(nn.Module):
 
     def __init__(self, args: TrainArgs):
         """
-        :param args: A :class:`~chemprop.args.TrainArgs` object containing model arguments.
+        :param args: A :class:`~GR_pKa.args.TrainArgs` object containing model arguments.
         """
         super(MultiAtomRetention, self).__init__()
         self.atom_retention = args.atom_retention

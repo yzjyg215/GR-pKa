@@ -3,10 +3,10 @@
 import time
 from tap import Tap
 
-from chemprop.atomic_matrices import mol2matrix
-from chemprop.features import save_features
-from chemprop.data import get_smiles
-from chemprop.utils import makedirs
+from GR_pKa.atomic_matrices import mol2matrix
+from GR_pKa.features import save_features
+from GR_pKa.data import get_smiles
+from GR_pKa.utils import makedirs
 
 
 class Args(Tap):

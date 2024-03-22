@@ -18,10 +18,10 @@ from torch.optim import Adam, Optimizer
 from torch.optim.lr_scheduler import _LRScheduler
 from tqdm import tqdm
 
-from chemprop.args import PredictArgs, TrainArgs
-from chemprop.data import StandardScaler, MoleculeDataset, preprocess_smiles_columns, get_task_names
-from chemprop.models import MoleculeModel
-from chemprop.nn_utils import NoamLR
+from GR_pKa.args import PredictArgs, TrainArgs
+from GR_pKa.data import StandardScaler, MoleculeDataset, preprocess_smiles_columns, get_task_names
+from GR_pKa.models import MoleculeModel
+from GR_pKa.nn_utils import NoamLR
 
 
 def makedirs(path: str, isfile: bool = False) -> None:
@@ -48,12 +48,12 @@ def save_checkpoint(path: str,
     """
     Saves a model checkpoint.
 
-    :param model: A :class:`~chemprop.models.model.MoleculeModel`.
-    :param scaler: A :class:`~chemprop.data.scaler.StandardScaler` fitted on the data.
-    :param features_scaler: A :class:`~chemprop.data.scaler.StandardScaler` fitted on the features.
-    :param atom_descriptor_scaler: A :class:`~chemprop.data.scaler.StandardScaler` fitted on the atom descriptors.
-    :param bond_feature_scaler: A :class:`~chemprop.data.scaler.StandardScaler` fitted on the bond_fetaures.
-    :param args: The :class:`~chemprop.args.TrainArgs` object containing the arguments the model was trained with.
+    :param model: A :class:`~GR_pKa.models.model.MoleculeModel`.
+    :param scaler: A :class:`~GR_pKa.data.scaler.StandardScaler` fitted on the data.
+    :param features_scaler: A :class:`~GR_pKa.data.scaler.StandardScaler` fitted on the features.
+    :param atom_descriptor_scaler: A :class:`~GR_pKa.data.scaler.StandardScaler` fitted on the atom descriptors.
+    :param bond_feature_scaler: A :class:`~GR_pKa.data.scaler.StandardScaler` fitted on the bond_fetaures.
+    :param args: The :class:`~GR_pKa.args.TrainArgs` object containing the arguments the model was trained with.
     :param path: Path where checkpoint will be saved.
     """
     # Convert args to namespace for backwards compatibility
@@ -84,7 +84,7 @@ def load_checkpoint(path: str,
     :param path: Path where checkpoint is saved.
     :param device: Device where the model will be moved.
     :param logger: A logger for recording output.
-    :return: The loaded :class:`~chemprop.models.model.MoleculeModel`.
+    :return: The loaded :class:`~GR_pKa.models.model.MoleculeModel`.
     """
     if logger is not None:
         debug, info = logger.debug, logger.info
@@ -143,8 +143,8 @@ def load_scalers(path: str) -> Tuple[StandardScaler, StandardScaler, StandardSca
     Loads the scalers a model was trained with.
 
     :param path: Path where model checkpoint is saved.
-    :return: A tuple with the data :class:`~chemprop.data.scaler.StandardScaler`
-             and features :class:`~chemprop.data.scaler.StandardScaler`.
+    :return: A tuple with the data :class:`~GR_pKa.data.scaler.StandardScaler`
+             and features :class:`~GR_pKa.data.scaler.StandardScaler`.
     """
     state = torch.load(path, map_location=lambda storage, loc: storage)
 
@@ -176,7 +176,7 @@ def load_args(path: str) -> TrainArgs:
     Loads the arguments a model was trained with.
 
     :param path: Path where model checkpoint is saved.
-    :return: The :class:`~chemprop.args.TrainArgs` object that the model was trained with.
+    :return: The :class:`~GR_pKa.args.TrainArgs` object that the model was trained with.
     """
     args = TrainArgs()
     args.from_dict(vars(torch.load(path, map_location=lambda storage, loc: storage)[
@@ -339,7 +339,7 @@ def build_optimizer(model: nn.Module, args: TrainArgs) -> Optimizer:
     Builds a PyTorch Optimizer.
 
     :param model: The model to optimize.
-    :param args: A :class:`~chemprop.args.TrainArgs` object containing optimizer arguments.
+    :param args: A :class:`~GR_pKa.args.TrainArgs` object containing optimizer arguments.
     :return: An initialized Optimizer.
     """
     params = [{'params': model.parameters(), 'lr': args.init_lr,
@@ -353,7 +353,7 @@ def build_lr_scheduler(optimizer: Optimizer, args: TrainArgs, total_epochs: List
     Builds a PyTorch learning rate scheduler.
 
     :param optimizer: The Optimizer whose learning rate will be scheduled.
-    :param args: A :class:`~chemprop.args.TrainArgs` object containing learning rate arguments.
+    :param args: A :class:`~GR_pKa.args.TrainArgs` object containing learning rate arguments.
     :param total_epochs: The total number of epochs for which the model will be run.
     :return: An initialized learning rate scheduler.
     """
@@ -462,9 +462,9 @@ def save_smiles_splits(data_path: str,
     :param task_names: List of target names for the model as from the function get_task_names().
         If not provided, will use datafile header entries.
     :param features_path: List of path(s) to files with additional molecule features.
-    :param train_data: Train :class:`~chemprop.data.data.MoleculeDataset`.
-    :param val_data: Validation :class:`~chemprop.data.data.MoleculeDataset`.
-    :param test_data: Test :class:`~chemprop.data.data.MoleculeDataset`.
+    :param train_data: Train :class:`~GR_pKa.data.data.MoleculeDataset`.
+    :param val_data: Validation :class:`~GR_pKa.data.data.MoleculeDataset`.
+    :param test_data: Test :class:`~GR_pKa.data.data.MoleculeDataset`.
     :param smiles_columns: The name of the column containing SMILES. By default, uses the first column.
     """
     makedirs(save_dir)
@@ -542,9 +542,9 @@ def update_prediction_args(predict_args: PredictArgs,
     Also raises errors for situations where the prediction arguments and training arguments
     are different but must match for proper function.
 
-    :param predict_args: The :class:`~chemprop.args.PredictArgs` object containing the arguments to use for making predictions.
-    :param train_args: The :class:`~chemprop.args.TrainArgs` object containing the arguments used to train the model previously.
-    :param missing_to_defaults: Whether to replace missing training arguments with the current defaults for :class: `~chemprop.args.TrainArgs`.
+    :param predict_args: The :class:`~GR_pKa.args.PredictArgs` object containing the arguments to use for making predictions.
+    :param train_args: The :class:`~GR_pKa.args.TrainArgs` object containing the arguments used to train the model previously.
+    :param missing_to_defaults: Whether to replace missing training arguments with the current defaults for :class: `~GR_pKa.args.TrainArgs`.
         This is used for backwards compatibility.
     :param validate_feature_sources: Indicates whether the feature sources (from path or generator) are checked for consistency between
         the training and prediction arguments. This is not necessary for fingerprint generation, where molecule features are not used.

@@ -6,9 +6,9 @@ import torch
 import torch.nn as nn
 
 from .mpn import MPN
-from chemprop.args import TrainArgs
-from chemprop.features import BatchMolGraph
-from chemprop.nn_utils import get_activation_function, initialize_weights
+from GR_pKa.args import TrainArgs
+from GR_pKa.features import BatchMolGraph
+from GR_pKa.nn_utils import get_activation_function, initialize_weights
 
 
 class MoleculeModel(nn.Module):
@@ -16,7 +16,7 @@ class MoleculeModel(nn.Module):
 
     def __init__(self, args: TrainArgs, featurizer: bool = False):
         """
-        :param args: A :class:`~chemprop.args.TrainArgs` object containing model arguments.
+        :param args: A :class:`~GR_pKa.args.TrainArgs` object containing model arguments.
         :param featurizer: Whether the model should act as a featurizer, i.e., outputting the
                            learned features from the last layer prior to prediction rather than
                            outputting the actual property predictions.
@@ -46,7 +46,7 @@ class MoleculeModel(nn.Module):
         """
         Creates the message passing encoder for the model.
 
-        :param args: A :class:`~chemprop.args.TrainArgs` object containing model arguments.
+        :param args: A :class:`~GR_pKa.args.TrainArgs` object containing model arguments.
         """
         self.encoder = MPN(args)
         # args.atom_messages = True
@@ -56,7 +56,7 @@ class MoleculeModel(nn.Module):
         """
         Creates the feed-forward layers for the model.
 
-        :param args: A :class:`~chemprop.args.TrainArgs` object containing model arguments.
+        :param args: A :class:`~GR_pKa.args.TrainArgs` object containing model arguments.
         """
         self.multiclass = args.dataset_type == 'multiclass'
         if self.multiclass:

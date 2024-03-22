@@ -1,7 +1,7 @@
 """Loads a trained model checkpoint and makes predictions on a dataset."""
 
-from chemprop.args import PredictArgs
-from chemprop.train import make_predictions
+from GR_pKa.args import PredictArgs
+from GR_pKa.train import make_predictions
 
 
 if __name__ == "__main__":

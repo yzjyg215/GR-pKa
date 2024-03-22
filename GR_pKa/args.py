@@ -9,9 +9,9 @@ import torch
 # pip install typed-argument-parser (https://github.com/swansonk14/typed-argument-parser)
 from tap import Tap
 
-import chemprop.data.utils
-from chemprop.data import set_cache_mol
-from chemprop.features import get_available_features_generators
+import GR_pKa.data.utils
+from GR_pKa.data import set_cache_mol
+from GR_pKa.features import get_available_features_generators
 
 
 Metric = Literal['auc', 'prc-auc', 'rmse', 'mae', 'mse',
@@ -148,7 +148,7 @@ class CommonArgs(Tap):
     @property
     def features_scaling(self) -> bool:
         """
-        Whether to apply normalization with a :class:`~chemprop.data.scaler.StandardScaler`
+        Whether to apply normalization with a :class:`~GR_pKa.data.scaler.StandardScaler`
         to the additional molecule-level features.
         """
         return not self.no_features_scaling
@@ -217,7 +217,7 @@ class CommonArgs(Tap):
 
 
 class TrainArgs(CommonArgs):
-    """:class:`TrainArgs` includes :class:`CommonArgs` along with additional arguments used for training a Chemprop model."""
+    """:class:`TrainArgs` includes :class:`CommonArgs` along with additional arguments used for training a GR_pKa model."""
 
     # General arguments
     data_path: str
@@ -469,7 +469,7 @@ class TrainArgs(CommonArgs):
     @property
     def atom_descriptor_scaling(self) -> bool:
         """
-        Whether to apply normalization with a :class:`~chemprop.data.scaler.StandardScaler`
+        Whether to apply normalization with a :class:`~GR_pKa.data.scaler.StandardScaler`
         to the additional atom features."
         """
         return not self.no_atom_descriptor_scaling
@@ -477,7 +477,7 @@ class TrainArgs(CommonArgs):
     @property
     def bond_feature_scaling(self) -> bool:
         """
-        Whether to apply normalization with a :class:`~chemprop.data.scaler.StandardScaler`
+        Whether to apply normalization with a :class:`~GR_pKa.data.scaler.StandardScaler`
         to the additional bond features."
         """
         return not self.no_bond_features_scaling
@@ -488,7 +488,7 @@ class TrainArgs(CommonArgs):
         global temp_dir  # Prevents the temporary directory from being deleted upon function return
 
         # Process SMILES columns
-        self.smiles_columns = chemprop.data.utils.preprocess_smiles_columns(
+        self.smiles_columns = GR_pKa.data.utils.preprocess_smiles_columns(
             path=self.data_path,
             smiles_columns=self.smiles_columns,
             number_of_molecules=self.number_of_molecules,
@@ -613,7 +613,7 @@ class TrainArgs(CommonArgs):
 
 
 class PredictArgs(CommonArgs):
-    """:class:`PredictArgs` includes :class:`CommonArgs` along with additional arguments used for predicting with a Chemprop model."""
+    """:class:`PredictArgs` includes :class:`CommonArgs` along with additional arguments used for predicting with a GR_pKa model."""
 
     test_path: str
     """Path to CSV file containing testing data for which predictions will be made."""
@@ -634,7 +634,7 @@ class PredictArgs(CommonArgs):
     def process_args(self) -> None:
         super(PredictArgs, self).process_args()
 
-        self.smiles_columns = chemprop.data.utils.preprocess_smiles_columns(
+        self.smiles_columns = GR_pKa.data.utils.preprocess_smiles_columns(
             path=self.test_path,
             smiles_columns=self.smiles_columns,
             number_of_molecules=self.number_of_molecules,
@@ -646,7 +646,7 @@ class PredictArgs(CommonArgs):
 
 
 class InterpretArgs(CommonArgs):
-    """:class:`InterpretArgs` includes :class:`CommonArgs` along with additional arguments used for interpreting a trained Chemprop model."""
+    """:class:`InterpretArgs` includes :class:`CommonArgs` along with additional arguments used for interpreting a trained GR_pKa model."""
 
     data_path: str
     """Path to data CSV file."""
@@ -668,7 +668,7 @@ class InterpretArgs(CommonArgs):
     def process_args(self) -> None:
         super(InterpretArgs, self).process_args()
 
-        self.smiles_columns = chemprop.data.utils.preprocess_smiles_columns(
+        self.smiles_columns = GR_pKa.data.utils.preprocess_smiles_columns(
             path=self.data_path,
             smiles_columns=self.smiles_columns,
             number_of_molecules=self.number_of_molecules,
@@ -685,7 +685,7 @@ class InterpretArgs(CommonArgs):
 
 
 class HyperoptArgs(TrainArgs):
-    """:class:`HyperoptArgs` includes :class:`TrainArgs` along with additional arguments used for optimizing Chemprop hyperparameters."""
+    """:class:`HyperoptArgs` includes :class:`TrainArgs` along with additional arguments used for optimizing GR_pKa hyperparameters."""
 
     num_iters: int = 20
     """Number of hyperparameter choices to try."""

@@ -4,22 +4,22 @@ from typing import Callable, Dict, List, Set, Tuple
 import numpy as np
 from rdkit import Chem
 
-from chemprop.args import InterpretArgs
-from chemprop.data import get_data_from_smiles, get_header, get_smiles, MoleculeDataLoader, MoleculeDataset
-from chemprop.train import predict
-from chemprop.utils import load_args, load_checkpoint, load_scalers, timeit
+from GR_pKa.args import InterpretArgs
+from GR_pKa.data import get_data_from_smiles, get_header, get_smiles, MoleculeDataLoader, MoleculeDataset
+from GR_pKa.train import predict
+from GR_pKa.utils import load_args, load_checkpoint, load_scalers, timeit
 
 
 MIN_ATOMS = 15
 C_PUCT = 10
 
 
-class ChempropModel:
-    """A :class:`ChempropModel` is a wrapper around a :class:`~chemprop.models.model.MoleculeModel` for interpretation."""
+class GR_pKaModel:
+    """A :class:`GR_pKaModel` is a wrapper around a :class:`~GR_pKa.models.model.MoleculeModel` for interpretation."""
 
     def __init__(self, args: InterpretArgs) -> None:
         """
-        :param args: A :class:`~chemprop.args.InterpretArgs` object containing arguments for interpretation.
+        :param args: A :class:`~GR_pKa.args.InterpretArgs` object containing arguments for interpretation.
         """
         self.args = args
         self.train_args = load_args(args.checkpoint_paths[0])
@@ -213,7 +213,7 @@ def mcts_rollout(node: MCTSNode,
     :param clusters: Clusters of atoms.
     :param atom_cls: Atom indices in the clusters.
     :param nei_cls: Neighboring clusters.
-    :param scoring_function: A function for scoring subgraph SMILES using a Chemprop model.
+    :param scoring_function: A function for scoring subgraph SMILES using a GR_pKa model.
     :return: The score of this MCTS rollout.
     """
     cur_atoms = node.atoms
@@ -261,7 +261,7 @@ def mcts(smiles: str,
     Runs the Monte Carlo Tree Search algorithm.
 
     :param smiles: The SMILES of the molecule to perform the search on.
-    :param scoring_function: A function for scoring subgraph SMILES using a Chemprop model.
+    :param scoring_function: A function for scoring subgraph SMILES using a GR_pKa model.
     :param n_rollout: THe number of MCTS rollouts to perform.
     :param max_atoms: The maximum number of atoms allowed in an extracted rationale.
     :param prop_delta: The minimum required property value for a satisfactory rationale.
@@ -293,9 +293,9 @@ def mcts(smiles: str,
 @timeit()
 def interpret(args: InterpretArgs) -> None:
     """
-    Runs interpretation of a Chemprop model using the Monte Carlo Tree Search algorithm.
+    Runs interpretation of a GR_pKa model using the Monte Carlo Tree Search algorithm.
 
-    :param args: A :class:`~chemprop.args.InterpretArgs` object containing arguments for interpretation.
+    :param args: A :class:`~GR_pKa.args.InterpretArgs` object containing arguments for interpretation.
     """
 
     if args.number_of_molecules != 1:
@@ -303,10 +303,10 @@ def interpret(args: InterpretArgs) -> None:
     
     global C_PUCT, MIN_ATOMS
 
-    chemprop_model = ChempropModel(args)
+    GR_pKa_model = GR_pKaModel(args)
 
     def scoring_function(smiles: List[str]) -> List[float]:
-        return chemprop_model(smiles)[:, args.property_id - 1]
+        return GR_pKa_model(smiles)[:, args.property_id - 1]
 
     C_PUCT = args.c_puct
     MIN_ATOMS = args.min_atoms
@@ -339,9 +339,9 @@ def interpret(args: InterpretArgs) -> None:
             print(f'{smiles},{score:.3f},{rats[0].smiles},{rats[0].P:.3f}')
 
 
-def chemprop_interpret() -> None:
-    """Runs interpretation of a Chemprop model.
+def GR_pKa_interpret() -> None:
+    """Runs interpretation of a GR_pKa model.
 
-    This is the entry point for the command line command :code:`chemprop_interpret`.
+    This is the entry point for the command line command :code:`GR_pKa_interpret`.
     """
     interpret(args=InterpretArgs().parse_args())

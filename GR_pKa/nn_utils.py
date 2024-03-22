@@ -15,7 +15,7 @@ from rdkit.Chem.Draw import SimilarityMaps, rdMolDraw2D
 import matplotlib
 import matplotlib.pyplot as plt
 
-from chemprop.data import MoleculeDataLoader, MoleculeDataset
+from GR_pKa.data import MoleculeDataLoader, MoleculeDataset
 
 
 def compute_pnorm(model: nn.Module) -> float:
@@ -121,10 +121,10 @@ def compute_molecule_vectors(model: nn.Module,
                              batch_size: int,
                              num_workers: int = 8) -> List[np.ndarray]:
     """
-    Computes the molecule vectors output from the last layer of a :class:`~chemprop.models.MoleculeModel`.
+    Computes the molecule vectors output from the last layer of a :class:`~GR_pKa.models.MoleculeModel`.
 
-    :param model: A :class:`~chemprop.models.MoleculeModel`.
-    :param data: A :class:`~chemprop.data.MoleculeDataset`.
+    :param model: A :class:`~GR_pKa.models.MoleculeModel`.
+    :param data: A :class:`~GR_pKa.data.MoleculeDataset`.
     :param batch_size: Batch size.
     :param num_workers: Number of parallel data loading workers.
     :return: A list of 1D numpy arrays of length hidden_size containing

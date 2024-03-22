@@ -7,10 +7,9 @@ import torch
 import torch.nn as nn
 
 from .retention import MultiBondRetention, MultiBondFastRetention, MultiAtomRetention, SublayerConnection
-from chemprop.args import TrainArgs
-from chemprop.features import BatchMolGraph, get_atom_fdim, get_bond_fdim, mol2graph
-from chemprop.nn_utils import index_select_ND, get_activation_function
-from chemprop.retention_visualization import visualize_atom_retention
+from GR_pKa.args import TrainArgs
+from GR_pKa.features import BatchMolGraph, get_atom_fdim, get_bond_fdim, mol2graph
+from GR_pKa.nn_utils import index_select_ND, get_activation_function
 
 
 class MPNEncoder(nn.Module):
@@ -18,7 +17,7 @@ class MPNEncoder(nn.Module):
 
     def __init__(self, args: TrainArgs, atom_fdim: int, bond_fdim: int):
         """
-        :param args: A :class:`~chemprop.args.TrainArgs` object containing model arguments.
+        :param args: A :class:`~GR_pKa.args.TrainArgs` object containing model arguments.
         :param atom_fdim: Atom feature vector dimension.
         :param bond_fdim: Bond feature vector dimension.
         """
@@ -92,7 +91,7 @@ class MPNEncoder(nn.Module):
         """
         Encodes a batch of molecular graphs.
 
-        :param mol_graph: A :class:`~chemprop.features.featurization.BatchMolGraph` representing
+        :param mol_graph: A :class:`~GR_pKa.features.featurization.BatchMolGraph` representing
                           a batch of molecular graphs.
         :param mol_adj_batch: A list of numpy arrays containing additional adjacency matrices
         :param mol_dist_batch: A list of numpy arrays containing additional distance matrices
@@ -189,10 +188,6 @@ class MPNEncoder(nn.Module):
                     #mol_vec = self.atom_residual(cur_hiddens, mol_vec)
                     mol_vec=0.8*cur_hiddens+0.2*mol_vec
 
-                    if viz_dir:
-                        visualize_atom_retention(
-                            viz_dir, mol_graph.smiles_batch[i], a_size, ret_a_w)
-
                 else:
                     mol_vec = cur_hiddens  # (num_atoms, hidden_size)
 
@@ -218,7 +213,7 @@ class MPN(nn.Module):
                  atom_fdim: int = None,
                  bond_fdim: int = None):
         """
-        :param args: A :class:`~chemprop.args.TrainArgs` object containing model arguments.
+        :param args: A :class:`~GR_pKa.args.TrainArgs` object containing model arguments.
         :param atom_fdim: Atom feature vector dimension.
         :param bond_fdim: Bond feature vector dimension.
         """
@@ -256,7 +251,7 @@ class MPN(nn.Module):
         Encodes a batch of molecules.
 
         :param batch: A list of list of SMILES, a list of list of RDKit molecules, or a
-                      list of :class:`~chemprop.features.featurization.BatchMolGraph`.
+                      list of :class:`~GR_pKa.features.featurization.BatchMolGraph`.
                       The outer list is of length :code:`number_of_molecules` (number of molecules per datapoint),
                       the inner list or BatchMolGraph is of length :code:`num_molecules` (number of datapoints in batch).
         :param features_batch: A list of numpy arrays containing additional features.
