@@ -305,7 +305,7 @@ Cn1ncc2c(N)nc(Cl)nc21,2.69
 Nc1cccc2nnccc12,2.7
 Cc1cc(C)ncn1,2.7
 c1ccc(CSc2nc(SCc3ccccc3)c(-c3ccccc3)[nH]2)cc1,2.7
-Oc1c(I)cc(I)c2cccnc12,2.7
+Oc(c(I)cc1I)c2c1c(C)ccn2,2.7
 Oc1cccc2ccnnc12,2.72
 CC(=O)c1ccccn1,2.73
 c1csc(-c2nccs2)n1,2.76
@@ -630,7 +630,7 @@ Brc1ccc2ncccc2c1,3.87
 CN(C)c1ncnc2nc[nH]c12,3.87
 CSc1cnc2ccccc2c1,3.88
 CCOC(=O)c1cnc2ccccc2c1OCC,3.88
-Nc1ncnc2c1cnn2-c1ccccc1,3.89
+Nc1c2cnn(c3ccc(C)cc3)c2ncn1,3.89
 COc1cccnc1C=O,3.89
 Nc1ncnc2ncn(C3OC(CO)C(O)C3O)c12,3.9
 CN(C)c1cc[n+]([O-])cc1,3.9
@@ -3081,5 +3081,5 @@ CNC(=N)N(C)C,13.6
 CN(C)C(=N)N(C)C,13.6
 CN=C(N(C)C)N(C)C,13.8
 CN=C(NC)N(C)C,13.9
-O=C(CCc1nc2ccccc2c(=O)[nH]1)Nc1ncc(Cc2ccc(F)c(F)c2)s1,2.15
-[NH3+]c1ccc2c(c1)ncn2-c1ccccc1,2.58
+O=C(Nc1sc(Cc2cc(F)c(F)cc2)cn1)CCc(nc3c4cc(C)cc3)[nH]c4=O,2.15
+[NH3+]c1cc2ncn(c3ccc(C)cc3)c2cc1,2.58
