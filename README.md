@@ -54,13 +54,13 @@ QM features used in our study are available in the `features` directory of this 
 
 ## Featurization(the first step)
 
-**To save adjacency / distance / Coulomb matrices for a dataset, run:**
+**To save adjacency / distance / coulomb matrices for a dataset, run:**
 
 ```
 python save_atom_features.py --data_path <path> --save_dir <dir> --adjacency --coulomb --distance
 ```
 
-where `<path>` is the path to a CSV file containing a dataset, and `<dir>` is the directory where inter-atomic matrices will be saved. To generate adjacency, distance, Coulomb matrices, specify `--adjacency`, `--distance`, `--coulomb` flags.
+where `<path>` is the path to a CSV file containing a dataset, and `<dir>` is the directory where inter-atomic matrices will be saved. To generate adjacency, distance, coulomb matrices, specify `--adjacency`, `--distance`, `--coulomb` flags.
 
 For example:
 
@@ -84,7 +84,7 @@ python train.py --data_path <path> --dataset_type <regression> --save_dir <dir> 
 - To use atom retention in the readout phase, add `--atom_retention`
 - Specify `--adjacency` to add adjacency matrix and `<adj_path>` is the path to a npz file containing the saved adjacency matrices of a dataset.
 - Specify `--distance` to add distance matrix and `<dist_path>` is the path to a npz file containing the saved distance matrices of a dataset.
-- Specify `--coulomb` to add Coulomb matrix and `<clb_path>` is the path to a npz file containing the saved coulomb matrices of a dataset.
+- Specify `--coulomb` to add coulomb matrix and `<clb_path>` is the path to a npz file containing the saved coulomb matrices of a dataset.
 - `<QM_features_path>` is the path to a csv file containing the QM features of a dataset.
 - Specify `--normalize_matrices` to normalize inter-atomic matrices.
 
