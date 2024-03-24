@@ -12,12 +12,12 @@ from torch.optim.lr_scheduler import ExponentialLR
 from .evaluate import evaluate, evaluate_predictions
 from .predict import predict
 from .train import train
-from chemprop.args import TrainArgs
-from chemprop.constants import MODEL_FILE_NAME
-from chemprop.data import get_class_sizes, get_data, MoleculeDataLoader, MoleculeDataset, set_cache_graph, split_data
-from chemprop.models import MoleculeModel
-from chemprop.nn_utils import param_count
-from chemprop.utils import build_optimizer, build_lr_scheduler, get_loss_func, load_checkpoint, makedirs, \
+from GR_pKa.args import TrainArgs
+from GR_pKa.constants import MODEL_FILE_NAME
+from GR_pKa.data import get_class_sizes, get_data, MoleculeDataLoader, MoleculeDataset, set_cache_graph, split_data
+from GR_pKa.models import MoleculeModel
+from GR_pKa.nn_utils import param_count
+from GR_pKa.utils import build_optimizer, build_lr_scheduler, get_loss_func, load_checkpoint, makedirs, \
     save_checkpoint, save_smiles_splits
 
 
@@ -25,11 +25,11 @@ def run_training(args: TrainArgs,
                  data: MoleculeDataset,
                  logger: Logger = None) -> Dict[str, List[float]]:
     """
-    Loads data, trains a Chemprop model, and returns test scores for the model checkpoint with the highest validation score.
+    Loads data, trains a GR_pKa model, and returns test scores for the model checkpoint with the highest validation score.
 
-    :param args: A :class:`~chemprop.args.TrainArgs` object containing arguments for
-                 loading data and training the Chemprop model.
-    :param data: A :class:`~chemprop.data.MoleculeDataset` containing the data.
+    :param args: A :class:`~GR_pKa.args.TrainArgs` object containing arguments for
+                 loading data and training the GR_pKa model.
+    :param data: A :class:`~GR_pKa.data.MoleculeDataset` containing the data.
     :param logger: A logger to record output.
     :return: A dictionary mapping each metric in :code:`args.metrics` to a list of values for each task.
 
@@ -274,17 +274,17 @@ def run_training(args: TrainArgs,
         
         loss=pd.DataFrame(loss)
         rmse=pd.DataFrame(rmse)
-        loss.to_csv('D:/try/result/loss.csv')
-        rmse.to_csv('D:/try/result/rmse.csv')
+        loss.to_csv('./loss.csv')
+        rmse.to_csv('./rmse.csv')
         try:
             r2=pd.DataFrame(r2)
             mae=pd.DataFrame(mae)
             mse=pd.DataFrame(mse)
-            r2.to_csv('D:/try/result/r2_total.csv')
-            mae.to_csv('D:/try/result/mae_total.csv')
-            mse.to_csv('D:/try/result/mse_total.csv')
+            r2.to_csv('./r2_total.csv')
+            mae.to_csv('./mae_total.csv')
+            mse.to_csv('./mse_total.csv')
         except:
-            print("有问题")
+            print("error")
 
         # Evaluate on test set using model with best validation score
         info(

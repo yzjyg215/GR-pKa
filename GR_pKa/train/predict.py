@@ -3,8 +3,8 @@ from typing import List
 import torch
 from tqdm import tqdm
 
-from chemprop.data import MoleculeDataLoader, MoleculeDataset, StandardScaler
-from chemprop.models import MoleculeModel
+from GR_pKa.data import MoleculeDataLoader, MoleculeDataset, StandardScaler
+from GR_pKa.models import MoleculeModel
 
 
 def predict(model: MoleculeModel,
@@ -14,10 +14,10 @@ def predict(model: MoleculeModel,
     """
     Makes predictions on a dataset using an ensemble of models.
 
-    :param model: A :class:`~chemprop.models.model.MoleculeModel`.
-    :param data_loader: A :class:`~chemprop.data.data.MoleculeDataLoader`.
+    :param model: A :class:`~GR_pKa.models.model.MoleculeModel`.
+    :param data_loader: A :class:`~GR_pKa.data.data.MoleculeDataLoader`.
     :param disable_progress_bar: Whether to disable the progress bar.
-    :param scaler: A :class:`~chemprop.features.scaler.StandardScaler` object fit on the training targets.
+    :param scaler: A :class:`~GR_pKa.features.scaler.StandardScaler` object fit on the training targets.
     :return: A list of lists of predictions. The outer list is molecules while the inner list is tasks.
     """
     model.eval()

@@ -3,9 +3,9 @@ import logging
 from typing import Dict, List
 
 from .predict import predict
-from chemprop.data import MoleculeDataLoader, StandardScaler
-from chemprop.models import MoleculeModel
-from chemprop.utils import get_metric_func
+from GR_pKa.data import MoleculeDataLoader, StandardScaler
+from GR_pKa.models import MoleculeModel
+from GR_pKa.utils import get_metric_func
 import numpy as np
 import pandas as pd
 
@@ -87,7 +87,7 @@ def evaluate_predictions(preds: List[List[float]],
             mae_total_new.append(mae_epoch)
             mse_total_new.append(mse_epoch)
         except:
-            print('现在是测试集')
+            print('test')
         print('R2_score:'+ str(r2_epoch))
         print('Rmse:'+ str(rmse_epoch))
         print('MSE:'+ str(mse_epoch))
@@ -96,8 +96,8 @@ def evaluate_predictions(preds: List[List[float]],
     results = dict(results)
 
     if save:
-        np.save('D:/try/preds.npy',valid_preds[i])
-        np.save('D:/try/targets.npy',valid_targets[i])
+        np.save('./preds.npy',valid_preds[i])
+        np.save('./targets.npy',valid_targets[i])
     #hard_preds = [1 if p > 0.5 else 0 for p in valid_preds[i]]
     
     return results
@@ -116,12 +116,12 @@ def evaluate(model: MoleculeModel,
     """
     Evaluates an ensemble of models on a dataset by making predictions and then evaluating the predictions.
 
-    :param model: A :class:`~chemprop.models.model.MoleculeModel`.
-    :param data_loader: A :class:`~chemprop.data.data.MoleculeDataLoader`.
+    :param model: A :class:`~GR_pKa.models.model.MoleculeModel`.
+    :param data_loader: A :class:`~GR_pKa.data.data.MoleculeDataLoader`.
     :param num_tasks: Number of tasks.
     :param metrics: A list of names of metric functions.
     :param dataset_type: Dataset type.
-    :param scaler: A :class:`~chemprop.features.scaler.StandardScaler` object fit on the training targets.
+    :param scaler: A :class:`~GR_pKa.features.scaler.StandardScaler` object fit on the training targets.
     :param logger: A logger to record output.
     :return: A dictionary mapping each metric in :code:`metrics` to a list of values for each task.
 

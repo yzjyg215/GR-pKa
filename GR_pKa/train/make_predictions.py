@@ -6,10 +6,10 @@ import numpy as np
 from tqdm import tqdm
 
 from .predict import predict
-from chemprop.args import PredictArgs, TrainArgs
-from chemprop.data import get_data, get_data_from_smiles, MoleculeDataLoader, MoleculeDataset
-from chemprop.utils import load_args, load_checkpoint, load_scalers, makedirs, timeit, update_prediction_args
-from chemprop.features import set_extra_atom_fdim, set_extra_bond_fdim
+from GR_pKa.args import PredictArgs, TrainArgs
+from GR_pKa.data import get_data, get_data_from_smiles, MoleculeDataLoader, MoleculeDataset
+from GR_pKa.utils import load_args, load_checkpoint, load_scalers, makedirs, timeit, update_prediction_args
+from GR_pKa.features import set_extra_atom_fdim, set_extra_bond_fdim
 
 @timeit()
 def make_predictions(args: PredictArgs, smiles: List[List[str]] = None) -> List[List[Optional[float]]]:
@@ -19,7 +19,7 @@ def make_predictions(args: PredictArgs, smiles: List[List[str]] = None) -> List[
     If SMILES are provided, then makes predictions on smiles.
     Otherwise makes predictions on :code:`args.test_data`.
 
-    :param args: A :class:`~chemprop.args.PredictArgs` object containing arguments for
+    :param args: A :class:`~GR_pKa.args.PredictArgs` object containing arguments for
                  loading data and a model and making predictions.
     :param smiles: List of list of SMILES to make predictions on.
     :return: A list of lists of target predictions.
@@ -164,9 +164,9 @@ def make_predictions(args: PredictArgs, smiles: List[List[str]] = None) -> List[
     return avg_preds
 
 
-def chemprop_predict() -> None:
-    """Parses Chemprop predicting arguments and runs prediction using a trained Chemprop model.
+def GR_pKa_predict() -> None:
+    """Parses GR_pKa predicting arguments and runs prediction using a trained GR_pKa model.
 
-    This is the entry point for the command line command :code:`chemprop_predict`.
+    This is the entry point for the command line command :code:`GR_pKa_predict`.
     """
     make_predictions(args=PredictArgs().parse_args())

@@ -9,11 +9,11 @@ import numpy as np
 import pandas as pd
 
 from .run_training import run_training
-from chemprop.args import TrainArgs
-from chemprop.constants import TEST_SCORES_FILE_NAME, TRAIN_LOGGER_NAME
-from chemprop.data import get_data, get_task_names, MoleculeDataset, validate_dataset_type
-from chemprop.utils import create_logger, makedirs, timeit
-from chemprop.features import set_extra_atom_fdim, set_extra_bond_fdim
+from GR_pKa.args import TrainArgs
+from GR_pKa.constants import TEST_SCORES_FILE_NAME, TRAIN_LOGGER_NAME
+from GR_pKa.data import get_data, get_task_names, MoleculeDataset, validate_dataset_type
+from GR_pKa.utils import create_logger, makedirs, timeit
+from GR_pKa.features import set_extra_atom_fdim, set_extra_bond_fdim
 
 
 @timeit(logger_name=TRAIN_LOGGER_NAME)
@@ -26,8 +26,8 @@ def cross_validate(args: TrainArgs,
     For each of k splits (folds) of the data, trains and tests a model on that split
     and aggregates the performance across folds.
 
-    :param args: A :class:`~chemprop.args.TrainArgs` object containing arguments for
-                 loading data and training the Chemprop model.
+    :param args: A :class:`~GR_pKa.args.TrainArgs` object containing arguments for
+                 loading data and training the GR_pKa model.
     :param train_func: Function which runs training.
     :return: A tuple containing the mean and standard deviation performance across folds.
     """
@@ -151,9 +151,9 @@ def cross_validate(args: TrainArgs,
     return mean_score, std_score
 
 
-def chemprop_train() -> None:
-    """Parses Chemprop training arguments and trains (cross-validates) a Chemprop model.
+def GR_pKa_train() -> None:
+    """Parses GR_pKa training arguments and trains (cross-validates) a GR_pKa model.
 
-    This is the entry point for the command line command :code:`chemprop_train`.
+    This is the entry point for the command line command :code:`GR_pKa_train`.
     """
     cross_validate(args=TrainArgs().parse_args(), train_func=run_training)

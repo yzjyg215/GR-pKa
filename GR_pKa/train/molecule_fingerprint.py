@@ -4,18 +4,18 @@ from typing import List, Optional, Union
 import torch
 from tqdm import tqdm
 
-from chemprop.args import PredictArgs, TrainArgs
-from chemprop.data import get_data, get_data_from_smiles, MoleculeDataLoader, MoleculeDataset
-from chemprop.utils import load_args, load_checkpoint, makedirs, timeit, load_scalers, update_prediction_args
-from chemprop.data import MoleculeDataLoader, MoleculeDataset
-from chemprop.models import MoleculeModel
+from GR_pKa.args import PredictArgs, TrainArgs
+from GR_pKa.data import get_data, get_data_from_smiles, MoleculeDataLoader, MoleculeDataset
+from GR_pKa.utils import load_args, load_checkpoint, makedirs, timeit, load_scalers, update_prediction_args
+from GR_pKa.data import MoleculeDataLoader, MoleculeDataset
+from GR_pKa.models import MoleculeModel
 
 @timeit()
 def molecule_fingerprint(args: PredictArgs, smiles: List[List[str]] = None) -> List[List[Optional[float]]]:
     """
     Loads data and a trained model and uses the model to encode fingerprint vectors for the data.
 
-    :param args: A :class:`~chemprop.args.PredictArgs` object containing arguments for
+    :param args: A :class:`~GR_pKa.args.PredictArgs` object containing arguments for
                  loading data and a model and making predictions.
     :param smiles: List of list of SMILES to make predictions on.
     :return: A list of fingerprint vectors (list of floats)
@@ -116,8 +116,8 @@ def model_fingerprint(model: MoleculeModel,
     """
     Encodes the provided molecules into the latent fingerprint vectors, according to the provided model.
 
-    :param model: A :class:`~chemprop.models.model.MoleculeModel`.
-    :param data_loader: A :class:`~chemprop.data.data.MoleculeDataLoader`.
+    :param model: A :class:`~GR_pKa.models.model.MoleculeModel`.
+    :param data_loader: A :class:`~GR_pKa.data.data.MoleculeDataLoader`.
     :param disable_progress_bar: Whether to disable the progress bar.
     :return: A list of fingerprint vector lists.
     """
@@ -141,9 +141,9 @@ def model_fingerprint(model: MoleculeModel,
 
     return fingerprints
 
-def chemprop_fingerprint() -> None:
+def GR_pKa_fingerprint() -> None:
     """
-    Parses Chemprop predicting arguments and returns the latent representation vectors for
+    Parses GR_pKa predicting arguments and returns the latent representation vectors for
     provided molecules, according to a previously trained model.
     """
     molecule_fingerprint(args=PredictArgs().parse_args())

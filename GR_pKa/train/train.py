@@ -8,10 +8,10 @@ from torch.optim import Optimizer
 from torch.optim.lr_scheduler import _LRScheduler
 from tqdm import tqdm
 
-from chemprop.args import TrainArgs
-from chemprop.data import MoleculeDataLoader, MoleculeDataset
-from chemprop.models import MoleculeModel
-from chemprop.nn_utils import compute_gnorm, compute_pnorm, NoamLR
+from GR_pKa.args import TrainArgs
+from GR_pKa.data import MoleculeDataLoader, MoleculeDataset
+from GR_pKa.models import MoleculeModel
+from GR_pKa.nn_utils import compute_gnorm, compute_pnorm, NoamLR
 
 
 def train(model: MoleculeModel,
@@ -27,12 +27,12 @@ def train(model: MoleculeModel,
     """
     Trains a model for an epoch. (epoch = iterations x batch)
 
-    :param model: A :class:`~chemprop.models.model.MoleculeModel`.
-    :param data_loader: A :class:`~chemprop.data.data.MoleculeDataLoader`.
+    :param model: A :class:`~GR_pKa.models.model.MoleculeModel`.
+    :param data_loader: A :class:`~GR_pKa.data.data.MoleculeDataLoader`.
     :param loss_func: Loss function.
     :param optimizer: An optimizer.
     :param scheduler: A learning rate scheduler.
-    :param args: A :class:`~chemprop.args.TrainArgs` object containing arguments for training the model.
+    :param args: A :class:`~GR_pKa.args.TrainArgs` object containing arguments for training the model.
     :param n_iter: The number of iterations (training examples) trained on so far.
     :param logger: A logger for recording output.
     :param writer: A tensorboardX SummaryWriter.
