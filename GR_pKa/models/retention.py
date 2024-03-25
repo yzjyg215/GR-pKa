@@ -9,7 +9,7 @@ from GR_pKa.nn_utils import get_activation_function
 
 class MultiBondFastRetention(nn.Module):
     """
-    A :class:`MultiBondFastretention` is the bond level self-retention block (Fastformer) in the message passing phase.
+    A :class:`MultiBondFastRetention` is the bond level self-retention block in the message passing phase.
     """
 
     def __init__(self, args: TrainArgs):
@@ -134,7 +134,7 @@ class MultiBondFastRetention(nn.Module):
 
 class MultiBondRetention(nn.Module):
     """
-    A :class:`MultiBondretention` is the bond level self-retention block (Transformer) in the message passing phase.
+    A :class:`MultiBondRetention` is the bond level self-retention block (Transformer) in the message passing phase.
     """
 
     def __init__(self, args: TrainArgs):
@@ -229,7 +229,7 @@ class MultiBondRetention(nn.Module):
 
 class MultiAtomRetention(nn.Module):
     """
-    A :class:`MultiAtomretention` is the atom level self-retention block (Transformer) in the readout phase.
+    A :class:`MultiAtomRetention` is the atom level self-retention block in the readout phase.
     """
 
     def __init__(self, args: TrainArgs):

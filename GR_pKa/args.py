@@ -98,9 +98,9 @@ class CommonArgs(Tap):
     """Whether to perform apply softmax norm on generated atomic matrices"""
     max_data_size: int = None
     """Maximum number of data points to load."""
-    num_workers: int = 8
+    num_workers: int = 0
     """Number of workers for the parallel data loading (0 means sequential)."""
-    batch_size: int = 50
+    batch_size: int = 64
     """Batch size."""
     atom_descriptors: Literal['feature', 'descriptor'] = None
     """
@@ -254,7 +254,7 @@ class TrainArgs(CommonArgs):
     """Directory in which to find cross validation index files."""
     crossval_index_file: str = None
     """Indices of files to use as train/val/test. Overrides :code:`--num_folds` and :code:`--seed`."""
-    seed: int = 0
+    seed: int = 24
     """
     Random seed to use when splitting data into train/val/test sets.
     When :code`num_folds > 1`, the first fold uses this seed and all subsequent folds add 1 to the seed.
@@ -305,7 +305,7 @@ class TrainArgs(CommonArgs):
     activation: Literal['ReLU', 'LeakyReLU',
                         'PReLU', 'tanh', 'SELU', 'ELU'] = 'ReLU'
     """Activation function."""
-    atom_messages: bool = False
+    atom_messages: bool = True
     """Centers messages on atoms instead of on bonds."""
     undirected: bool = False
     """Undirected edges (always sum the two relevant bond vectors)."""
@@ -352,9 +352,9 @@ class TrainArgs(CommonArgs):
     """For norm aggregation, number by which to divide summed up atomic features"""
     bond_retention: bool = False
     """Self retention in message passing phase."""
-    bond_fast_retention: bool = False
+    bond_fast_retention: bool = True
     """Fast retention in message passing phase."""
-    atom_retention: bool = False
+    atom_retention: bool = True
     """Self retention in readout phase."""
     num_heads: int = 6
     """Number of retention heads (bond retention & atom retention)"""

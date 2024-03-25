@@ -12,6 +12,7 @@ from GR_pKa.features import BatchMolGraph, get_atom_fdim, get_bond_fdim, mol2gra
 from GR_pKa.nn_utils import index_select_ND, get_activation_function
 
 
+
 class MPNEncoder(nn.Module):
     """An :class:`MPNEncoder` is a message passing neural network for encoding a molecule."""
 
@@ -187,6 +188,7 @@ class MPNEncoder(nn.Module):
                         cur_hiddens, i, f_adj, f_dist, f_clb, viz_dir)
                     #mol_vec = self.atom_residual(cur_hiddens, mol_vec)
                     mol_vec=0.8*cur_hiddens+0.2*mol_vec
+
 
                 else:
                     mol_vec = cur_hiddens  # (num_atoms, hidden_size)

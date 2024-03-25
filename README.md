@@ -73,15 +73,13 @@ python save_atom_features.py --data_path data/pre-training/pretrain_pka.csv --sa
 To train a GR-pKa model, run:
 
 ```
-python train.py --data_path <path> --dataset_type <regression> --save_dir <dir> --bond_fast_retention --atom_retention --adjacency --adjacency_path <adj_path> --distance --distance_path <dist_path> --coulomb --coulomb_path <clb_path> --normalize_matrices --features_path <QM_features_path> --no_features_scaling
+python train.py --data_path <path> --dataset_type <regression> --save_dir <dir> --adjacency --adjacency_path <adj_path> --distance --distance_path <dist_path> --coulomb --coulomb_path <clb_path> --normalize_matrices --features_path <QM_features_path>
 ```
 
 **Notes:**
 
 - `<path>` is the path to a CSV file containing a dataset.
 - `<dir>` is the directory where model checkpoints will be saved.
-- To use bond retention in the message passing phase, add `--bond_fast_retention`
-- To use atom retention in the readout phase, add `--atom_retention`
 - Specify `--adjacency` to add adjacency matrix and `<adj_path>` is the path to a npz file containing the saved adjacency matrices of a dataset.
 - Specify `--distance` to add distance matrix and `<dist_path>` is the path to a npz file containing the saved distance matrices of a dataset.
 - Specify `--coulomb` to add coulomb matrix and `<clb_path>` is the path to a npz file containing the saved coulomb matrices of a dataset.
@@ -101,10 +99,9 @@ To load a trained model and make predictions, run `predict.py` and specify:
 - `--distance_path <dist_path>` Path to a npz file containing the saved distance matrices
 - `--coulomb_path <clb_path>` Path to a npz file containing the saved coulomb matrices
 - `--features_path <molf_path>` Path to a csv file containing the QM features.
-- `--normalize_matrices` and `--no_features_scaling` also must be specified if used in training.
+- `--normalize_matrices` must be specified if used in training.
 
 For example:
 
 ```
-python predict.py --test_path data/E-pKa/pka_E-pKa.csv --checkpoint_path model/pka_best.pt --preds_path prediction/pred.csv --adjacency_path xxx/adj.npz --distance_path xxx/dist.npz --coulomb_path xxx/clb.npz --features_path features/E-pKa/pka_E-pKa_features.csv --normalize_matrices --no_features_scaling
-```
+python predict.py --test_path data/E-pKa/pka_E-pKa.csv --checkpoint_path xxx.pt --preds_path prediction/pred.csv --adjacency_path xxx/adj.npz --distance_path xxx/dist.npz --coulomb_path xxx/clb.npz --features_path features/E-pKa/pka_E-pKa_features.csv --normalize_matrices

@@ -154,16 +154,7 @@ def compute_molecule_vectors(model: nn.Module,
 
 
 class NoamLR(_LRScheduler):
-    """
-    Noam learning rate scheduler with piecewise linear increase and exponential decay.
 
-    The learning rate increases linearly from init_lr to max_lr over the course of
-    the first warmup_steps (where :code:`warmup_steps = warmup_epochs * steps_per_epoch`).
-    Then the learning rate decreases exponentially from :code:`max_lr` to :code:`final_lr` over the
-    course of the remaining :code:`total_steps - warmup_steps` (where :code:`total_steps =
-    total_epochs * steps_per_epoch`). This is roughly based on the learning rate
-    schedule from `Retention is All You Need <https://arxiv.org/abs/1706.03762>`_, section 5.3.
-    """
 
     def __init__(self,
                  optimizer: Optimizer,

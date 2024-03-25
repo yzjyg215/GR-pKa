@@ -1,4 +1,3 @@
-
 from typing import List, Tuple, Union
 from itertools import zip_longest
 from rdkit import Chem
