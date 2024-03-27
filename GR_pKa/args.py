@@ -293,7 +293,7 @@ class TrainArgs(CommonArgs):
     # Model arguments
     bias: bool = False
     """Whether to add bias to linear layers."""
-    hidden_size: int = 900
+    hidden_size: int = 800
     """Dimensionality of hidden layers in MPN."""
     depth: int = 5
     """Number of message passing steps."""
