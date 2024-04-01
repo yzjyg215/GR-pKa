@@ -43,7 +43,7 @@ class MultiBondFastRetention(nn.Module):
         self.W_b_o = nn.Linear(
             self.num_heads * self.ret_size, self.hidden_size)
         #self.norm = nn.LayerNorm(self.hidden_size, elementwise_affine=True)
-        self.norm=nn.GroupNorm(8,self.hidden_size,affine=True)
+        self.norm=nn.GroupNorm(5,self.hidden_size,affine=True)
 
     def forward(self, message, b_scope):
         """
@@ -163,7 +163,7 @@ class MultiBondRetention(nn.Module):
         self.W_b_o = nn.Linear(
             self.num_heads * self.ret_size, self.hidden_size)
         #self.norm = nn.LayerNorm(self.hidden_size, elementwise_affine=True)
-        self.norm=nn.GroupNorm(8,self.hidden_size,affine=True)
+        self.norm=nn.GroupNorm(5,self.hidden_size,affine=True)
 
     def forward(self, message, b_scope):
         """
