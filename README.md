@@ -101,7 +101,7 @@ To load a trained model and make predictions, run `predict.py` and specify:
 - `--features_path <molf_path>` Path to a csv file containing the QM features.
 - `--normalize_matrices` must be specified if used in training.
 
-## For example:
+## Example:
 
 ```
 python predict.py --test_path example/example.csv --checkpoint_path model/pka_best.pt --preds_path prediction/pred.csv --adjacency_path example/adj.npz --distance_path example/dist.npz --coulomb_path example/clb.npz --features_path example/features.csv --normalize_matrices
