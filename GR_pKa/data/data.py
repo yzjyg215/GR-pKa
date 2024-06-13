@@ -478,8 +478,8 @@ class MoleculeDataset(Dataset):
         :return: A :class:`~GR_pKa.data.StandardScaler` fitted to the targets.
         """
         targets = [d.raw_targets for d in self._data]
-        scaler = StandardScaler().fit(targets)
-        scaled_targets = scaler.transform(targets).tolist()
+        scaler = StandardScaler().fit(targets)      
+        scaled_targets = scaler.transform(targets).tolist()   # Standardization
         self.set_targets(scaled_targets)
 
         return scaler
