@@ -37,8 +37,8 @@ class MoleculeModel(nn.Module):
         if self.multiclass:
             self.multiclass_softmax = nn.Softmax(dim=2)
 
-        self.create_encoder(args)
-        self.create_ffn(args)
+        self.create_encoder(args)     # encoder
+        self.create_ffn(args)         # feed-forward layer
 
         initialize_weights(self)
 
@@ -48,7 +48,7 @@ class MoleculeModel(nn.Module):
 
         :param args: A :class:`~GR_pKa.args.TrainArgs` object containing model arguments.
         """
-        self.encoder = MPN(args)
+        self.encoder = MPN(args)     # MPN encoder
         # args.atom_messages = True
         # self.encoder_a = MPN(args)
 
