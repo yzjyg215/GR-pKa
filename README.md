@@ -4,7 +4,7 @@
 
 This repository provides codes and materials associated with the manuscript [GR-pKa: A message-passing neural network with retention mechanism for pKa prediction].
 
-- **GR-pKa** is a novel pka prediction method which takes advantages of multi-fidelity learning, quantum mechanical (QM) properties and retention mechanism.
+- **GR-pKa** is a novel pKa prediction method which takes advantages of multi-fidelity learning, quantum mechanical (QM) properties and retention mechanism.
 The prediction process consisted of three steps: molecular graph construction and featurization, message passing with the retention mechanism, and pKa prediction.
 
 We acknowledge the paper [Liu et al (2023). ABT-MPNN: an atom-bond transformer-based message-passing neural network for molecular property prediction. J Cheminform 2023;15(1):29.](https://doi.org/10.1186/s13321-023-00698-9) and the [Chemprop](https://github.com/chemprop/chemprop) repository ([version 1.2.0](https://github.com/chemprop/chemprop/releases/tag/v1.2.0)) which this code leveraged and built on top of.
@@ -43,7 +43,7 @@ seaborn>=0.11.1
 The data file must be be a CSV file with a header row. For example:
 
 ```
-smiles,pKa(or pKb)
+smiles,pKa_acidic(or pKa_basic)
 O=C(NCO)c1ccccc1,13.05
 O=C(O)C(F)c1ccccc1,2.45
 ...
@@ -104,4 +104,4 @@ To load a trained model and make predictions, run `predict.py` and specify:
 ## Example:
 
 ```
-python predict.py --test_path example/example.csv --checkpoint_path model/pka_best.pt --preds_path prediction/pred.csv --adjacency_path example/adj.npz --distance_path example/dist.npz --coulomb_path example/clb.npz --features_path example/features.csv --normalize_matrices
+python predict.py --test_path example/example.csv --checkpoint_path model/pka_acidic_best_.pt --preds_path prediction/pred.csv --adjacency_path example/adj.npz --distance_path example/dist.npz --coulomb_path example/clb.npz --features_path example/features.csv --normalize_matrices
